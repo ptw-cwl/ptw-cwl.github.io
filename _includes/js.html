@@ -1,0 +1,7 @@
+<script src="https://unpkg.com/layui@2.8.0/dist/layui.js"></script>
+
+	{% if page.js != nil %}
+	<script src="/assets/js/{{ page.js }}.js"></script>
+	{% else %}
+	<script src="/assets/js/main.js"></script>
+	{% endif %}

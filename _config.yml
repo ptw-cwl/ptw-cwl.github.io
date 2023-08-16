@@ -1,0 +1,18 @@
+
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+
+#定义哪些文件或目录不需要包含在生成的网站中。
+exclude:
+  - .jekyll-cache/
+  - Gemfile
+  - Gemfile.lock
+  - Rakefile
+  - README.md
+  - tmp
+  - log
+  - "*.bat"
+  - "*.bak"
+  - "*.cfg"
+  - "*.json"
