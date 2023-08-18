@@ -2,9 +2,8 @@
 ---
 @import "base";
 
- html, body {
-   @extend .full-size;
-   @extend .centered-container;
+  .ptw-cwl {
+    @extend .centered-container;
   }
  
   .outer {
@@ -33,15 +32,3 @@
    @extend .centered-container;
    font-size: 20vh; 
 }
-
-
-  .button {
-    padding: 20px 40px;
-    font-size: 16px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    border-radius: 10px; 
-    text-decoration: none; 
-  }
