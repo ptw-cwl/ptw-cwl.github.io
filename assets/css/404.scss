@@ -6,29 +6,28 @@
     @extend .centered-container;
   }
  
-  .outer {
-    width: 30%;
-    height: 40%;
-    display: flex;
-    flex-direction: column;
-  }
+    .container {
+      text-align: center;
+      padding: 5%;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
 
-  .upper {
-     width: 100%;
-     height: 80%;
-    @extend .centered-container;
-  }
+    h1 {
+      font-size: 72px;
+      margin: 0;
+    }
 
-  .lower {
-    width: 100%;
-     height: 20%;
-    @extend .centered-container;
-  }
+    p {
+      font-size: 18px;
+    }
 
+    a {
+      color: #007bff;
+      text-decoration: none;
+    }
 
-.container {
-   width: 100%;
-   height: 100%;
-   @extend .centered-container;
-   font-size: 20vh; 
-}
+    a:hover {
+      text-decoration: underline;
+    }
