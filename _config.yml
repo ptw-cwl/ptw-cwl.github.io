@@ -1,9 +1,20 @@
 
+sass:
+  sass_dir: _sass
+  style: compressed
+
 plugins:
   - jekyll-feed
   - jekyll-sitemap
 
-#定义哪些文件或目录不需要包含在生成的网站中。
+permalink: "blog/:title"
+
+defaults:
+  - scope:
+      type: 'posts'
+    values:
+      layout: post
+
 exclude:
   - .jekyll-cache/
   - Gemfile

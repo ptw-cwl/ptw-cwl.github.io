@@ -1,0 +1,69 @@
+---
+---
+@import "default";
+
+main {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+ 
+.container {
+   height: 10hv;
+   width: 100%;
+}
+
+.container p {
+    font-size: 30px;
+    padding: 20px;
+    text-align: center;
+}
+
+    .blog-card {
+      width: 50%;
+      height: 10hv;
+      margin: 20px;
+      background-color: #f2f2f2;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: row;
+    }
+
+    .blog-card-left .blog-card-right {
+       margin: 20px;
+    }
+
+    .blog-card-left{
+        width: 80%;
+    }
+
+    .blog-card-right{
+       width: 20%;
+       @extend .centered-container;
+    }
+
+    .blog-card-left h1,p{
+      padding: 10px;
+      margin-left: 10px;
+    }
+
+    .blog-card-left h1 {
+      font-size: 30px;
+    }
+
+     .blog-card-left p {
+      font-size: 18px;
+    }
+
+    .blog-card-right a {
+      background-color: #007bff;
+      border-radius: 10px;
+      padding: 20px;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .blog-card-left a:hover {
+      text-decoration: underline;
+    }

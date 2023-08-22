@@ -1,0 +1,19 @@
+---
+title: 博客
+layout: default
+css: blog
+---
+             <div class="container">
+                    <p>欢迎阅读ptw-cwl的博客文章,希望对你有所帮助! </p>
+			 </div>
+{% for post in site.posts %}
+ <div class="blog-card">
+ 	<div class="blog-card-left">
+	    <h1>{{ post.title }}</h1>
+        <p>简介</p>
+	</div>
+	<div class="blog-card-right">
+		<p><a href="{{post.url | absolute_url}}">阅读</a></p>
+	</div>
+  </div>
+{% endfor %}
