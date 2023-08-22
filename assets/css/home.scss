@@ -1,15 +1,13 @@
 ---
 ---
 @import "base";
-@import "navigation";
+@import "nav";
 @import "footer";
 
 .ptw-cwl {
    flex-direction: column;
 }
 
-.body {
-   width: 100%;
-   height: 85%;
-   @extend .centered-container;
+main {
+   height: 100%;
 }
