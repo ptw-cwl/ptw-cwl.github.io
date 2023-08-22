@@ -4,11 +4,11 @@ setting:
 
 main:
     - name: "首页"
-      url: "/home/#"
+      url: "/home"
     - name: "关于"
-      url: "/home/#about"
+      url: "/about"
     - name: "联系"
-      url: "/home/#contact"
+      url: "/contact"
     - name: "博客"
       url: "/blog"
     - name: "项目"
