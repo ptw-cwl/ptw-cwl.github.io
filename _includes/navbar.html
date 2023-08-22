@@ -1,0 +1,25 @@
+
+    <nav>
+		<a href="/">ptw-cwl</a>
+	            {% assign navbar-main = site.data.navbar.main %}
+                {% assign navbar-setting = site.data.navbar.setting %}
+                {% for navbar in navbar-main offset: {{navbar-setting.offset}} limit: {{navbar-setting.limit}} %}
+                {% unless navbar.name == "" or navbar.isDisplay == false %}
+                <a  href="{{navbar.url}}" {% if navbar.isBlank == true %} target="_blank" {% endif %}>
+				{{navbar.name}}</a>
+                {% endunless %}
+                {% endfor %}
+		<div class="dropdown">
+			<a href="/">更多</a>
+            <div class="dropdown-content">
+						{% assign navbar-sum = navbar-setting.offset | plus: navbar-setting.limit %}
+                        {% for navbar in navbar-main offset: {{navbar-sum}} %}
+                        {% unless navbar.name == "" or navbar.isDisplay == false %}
+                        <a href="{{navbar.url}}" {% if navbar.isBlank == true %} target="_blank" {% endif %}>
+                        {{navbar.name}}</a>
+                        {% endunless %}
+                        {% endfor %}
+            </div>
+        </div>
+		<a href="/">退出</a>
+    </nav>

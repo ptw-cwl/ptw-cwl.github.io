@@ -1,0 +1,26 @@
+setting:
+   offset: 0
+   limit: 5
+
+main:
+    - name: "首页"
+      url: "/home/#"
+    - name: "关于"
+      url: "/home/#about"
+    - name: "联系"
+      url: "/home/#contact"
+    - name: "博客"
+      url: "/blog"
+    - name: "项目"
+      url: "/project"
+    - name: "RSS订阅"
+      url: "/feed.xml"
+      isBlank: true
+    - name: "SiteMap"
+      url: "/sitemap.xml"
+      isBlank: true
+    - name: "404页面"
+      url: "/404"
+      isDisplay: false
+
+ 
