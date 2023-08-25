@@ -9,7 +9,13 @@ plugins:
   - jekyll-feed
   - jekyll-sitemap
 
-permalink: "blog/:title"
+collections:
+  posts:
+    output: true
+  authors:
+    output: true
+  archives:
+    output: true
 
 defaults:
   - scope:
@@ -17,7 +23,27 @@ defaults:
     values:
       layout: post
       css: post
+      permalink: "blog/:title"
+      date: "2022-03-01"
+      author: 
+         name: ptw-cwl
+         url: "/ptw-cwl"
+      tags:
+        -未分类
+  - scope:
+      type: 'authors'
+    values:
+      layout: author
+      css: author
+      permalink: "author/:title"
+  - scope:
+      type: 'archives'
+    values:
+      layout: archive
+      css: archive
+      permalink: "archive/:title"
 
+  
 exclude:
   - .jekyll-cache/
   - Gemfile
