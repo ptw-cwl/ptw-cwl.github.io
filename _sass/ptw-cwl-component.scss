@@ -46,3 +46,17 @@
   .background-ptw-cwl {
      background: url('/assets/images/ptw-cwl.png') center/contain no-repeat;
   }
+
+.rainbow-text {
+  font-size: 24px; 
+  font-weight: bold; 
+  text-shadow:
+    4px -4px 0 hsla(0, 100%, 50%, 1), 
+    3px -3px 0 hsla(0, 100%, 50%, 1), 
+    2px -2px 0 hsla(0, 100%, 50%, 1), 
+    1px -1px 0 hsla(0, 100%, 50%, 1),
+    -4px 4px 0 hsla(180, 100%, 50%, 1), 
+    -3px 3px 0 hsla(180, 100%, 50%, 1), 
+    -2px 2px 0 hsla(180, 100%, 50%, 1), 
+    -1px 1px 0 hsla(180, 100%, 50%, 1);
+}
