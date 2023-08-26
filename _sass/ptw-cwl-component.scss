@@ -26,3 +26,23 @@
         cursor: pointer;
         border-radius: 10px;
     }
+
+.preserve-3d {
+    transform-style: preserve-3d;
+    transition: all .2s;
+}
+
+.full-size {
+    width: 100vw;
+    height: 100vh;
+}
+
+.centered-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+  .background-ptw-cwl {
+     background: url('/assets/images/ptw-cwl.png') center/contain no-repeat;
+  }

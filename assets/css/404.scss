@@ -5,7 +5,7 @@
   .ptw-cwl {
     @extend .centered-container;
   }
- 
+
     .container {
       text-align: center;
       padding: 5%;
@@ -16,7 +16,6 @@
 
     h1 {
       font-size: 72px;
-      margin: 0;
     }
 
     p {
@@ -25,9 +24,4 @@
 
     a {
       color: #007bff;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
     }
