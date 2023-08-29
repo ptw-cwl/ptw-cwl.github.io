@@ -1,6 +1,10 @@
 <script src="/assets/js/copyNotice.js"></script>
 <script src="/assets/js/backToTop.js"></script>
 
+
 	{% if page.js != nil %}
-	<script src="/assets/js/{{ page.js }}.js"></script>
+	 {% assign js_names = page.js | split: ',' %}
+	 {% for js_name in js_names %}
+	<script src="/assets/js/{{ js_name }}.js"></script>
+	{% endfor %}
 	{% endif %}
