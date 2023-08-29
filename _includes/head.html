@@ -6,8 +6,5 @@
 
     <title>{{ page.title }}</title>
 	<link rel="shortcut icon" href="/assets/images/ptw-cwl-icon.png" type="image/x-icon">
-
-	{% if page.css != nil %}
-	<link rel="stylesheet" href="/assets/css/{{ page.css }}.css">
-	{% endif %}
+	{% include ptw-cwl/assets/css.html %}
 </head>

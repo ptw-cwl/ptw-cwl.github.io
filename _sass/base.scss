@@ -1,8 +1,6 @@
 @charset "utf-8";
 
-@import "ptw-cwl";
-@import "ptw-cwl-component";
-
+@import "./ptw-cwl/base";
 
 body, html, .ptw-cwl {
    @extend .full-size;

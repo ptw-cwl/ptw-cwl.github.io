@@ -1,4 +1,8 @@
 ---
 ---
 @import "default";
+@import "./ptw-cwl/clock";
 
+main {
+   @extend .centered-container;
+}

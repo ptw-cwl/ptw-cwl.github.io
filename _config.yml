@@ -21,7 +21,7 @@ defaults:
       type: 'posts'
     values:
       layout: post
-      css: post
+      assets: post
       permalink: "blog/:title"
       date: "2022-03-01"
       author: 
