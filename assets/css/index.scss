@@ -3,6 +3,7 @@
 @import "base";
 
   .ptw-cwl {
+    @extend .full-size;
     @extend .centered-container;
   }
  

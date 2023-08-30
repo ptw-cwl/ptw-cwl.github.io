@@ -1,8 +1,9 @@
 
 nav {
+  height: 70px;
+  width: 100%;
   position: fixed;
   top: 0;
-  width: 100%;
   display: flex;
   justify-content: space-between;
   background-color: #333;
@@ -10,8 +11,8 @@ nav {
 
 nav a {
   color: white;
-  text-decoration: none;
-  padding: 20px 20px;
+  height: 70px;
+  width: 80px;
 }
 
 nav a:hover {
@@ -19,35 +20,24 @@ nav a:hover {
   color: black;
 }
 
-nav a:first-child {
+nav > a:first-child {
+  width: 120px;
   margin-right: auto;
+  margin-left: 10px;
 }
 
-nav a:last-child {
+nav > a:last-child {
   margin-left: auto;
-}
-
-
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropdown a {
-  display: block;
+  margin-right: 10px;
 }
 
 .dropdown-content {
   display: none;
-  position: absolute;
-  background-color: #333;
-  z-index: 1;
-}
-
-.dropdown-content a {
-  display: block;
 }
 
 .dropdown:hover .dropdown-content {
   display: block;
+  background-color: #333;
 }
+
+

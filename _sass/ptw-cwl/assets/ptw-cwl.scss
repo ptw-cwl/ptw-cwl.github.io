@@ -1,8 +1,26 @@
 a {
   color: black;
   text-decoration: none;
+  text-align: center;
+  transition: 0.3s;
+  @extend .centered-container;
 }
 
 a:hover {
   color: blue;
 }
+
+.full-size {
+    width: 100vw;
+    height: 100vh;
+}
+
+.centered-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+  .background-ptw-cwl {
+     background: url('/assets/images/ptw-cwl.png') center/contain no-repeat;
+  }
