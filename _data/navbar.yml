@@ -21,6 +21,12 @@ main:
       isBlank: true
     - name: "404页面"
       url: "/404"
-      isDisplay: false
+      isHide: true
+    - name: "专栏"
+      url: "/archive"
+    - name: "作者"
+      url: "/author"
+    - name: "网址"
+      url: "/website"
 
  

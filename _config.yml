@@ -15,6 +15,8 @@ collections:
     output: true
   archives:
     output: true
+  websites:
+    output: true
 
 defaults:
   - scope:
@@ -32,15 +34,18 @@ defaults:
   - scope:
       type: 'authors'
     values:
-      layout: author
-      css: author
+      layout: base
       permalink: "author/:title"
   - scope:
       type: 'archives'
     values:
-      layout: archive
-      css: archive
+      layout: base
       permalink: "archive/:title"
+  - scope:
+      type: 'websites'
+    values:
+      layout: base
+      permalink: "website/:title"
 
   
 exclude:

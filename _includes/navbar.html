@@ -4,7 +4,7 @@
 	            {% assign navbar-main = site.data.navbar.main %}
                 {% assign navbar-setting = site.data.navbar.setting %}
                 {% for navbar in navbar-main offset: {{navbar-setting.offset}} limit: {{navbar-setting.limit}} %}
-                {% unless navbar.name == "" or navbar.isDisplay == false %}
+                {% unless navbar.name == "" or navbar.isHide == true %}
                 <a  href="{{navbar.url}}" {% if navbar.isBlank == true %} target="_blank" {% endif %}>
 				{{navbar.name}}</a>
                 {% endunless %}
@@ -14,7 +14,7 @@
             <div class="dropdown-content">
 						{% assign navbar-sum = navbar-setting.offset | plus: navbar-setting.limit %}
                         {% for navbar in navbar-main offset: {{navbar-sum}} %}
-                        {% unless navbar.name == "" or navbar.isDisplay == false %}
+                        {% unless navbar.name == "" or navbar.isHide == true %}
                         <a href="{{navbar.url}}" {% if navbar.isBlank == true %} target="_blank" {% endif %}>
                         {{navbar.name}}</a>
                         {% endunless %}
