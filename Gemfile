@@ -4,12 +4,11 @@
 source 'https://gems.ruby-china.com'
 
 
-gem "jekyll"
+gem 'jekyll', '3.9.0'
 
 group :jekyll_plugins do
   gem 'jekyll-sitemap'
   gem 'jekyll-feed'
-  gem 'jekyll-seo-tag'
 end
 
 install_if -> { RUBY_PLATFORM =~ /mingw|mswin|java/ } do
