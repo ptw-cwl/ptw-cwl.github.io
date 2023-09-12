@@ -1,4 +1,5 @@
 @echo off
+chcp 65001 > nul
 setlocal
 
 rem 删除当前文件夹中的所有 .bak 文件

@@ -7,21 +7,13 @@ main {
     align-items: center;
     flex-direction: column;
 }
- 
-.container {
-   height: 10hv;
-   width: 100%;
-}
 
-.container p {
+.container > p {
     font-size: 30px;
-    padding: 20px;
-    text-align: center;
 }
 
     .blog-card {
       width: 50%;
-      height: 10hv;
       margin: 20px;
       background-color: #f2f2f2;
       border-radius: 10px;
@@ -30,22 +22,12 @@ main {
       flex-direction: row;
     }
 
-    .blog-card-left .blog-card-right {
-       margin: 20px;
-    }
-
     .blog-card-left{
         width: 80%;
     }
 
     .blog-card-right{
        width: 20%;
-       @extend .centered-container;
-    }
-
-    .blog-card-left h1,p{
-      padding: 10px;
-      margin-left: 10px;
     }
 
     .blog-card-left h1 {

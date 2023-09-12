@@ -1,0 +1,15 @@
+
+	{% if page.css != nil %}
+	 <link rel="stylesheet" href="/assets/css/{{ page.css }}.css">
+	{% endif %}
+
+	{% if page.assets != nil %}
+	<link rel="stylesheet" href="/assets/css/{{ page.assets }}.css">
+	<script type="module" src="/assets/js/{{ page.assets }}.js"></script>
+	{% endif %}
+
+	{% if page.js != nil %}
+	<script type="module" src="/assets/js/{{ page.js }}.js"></script>
+	{% endif %}
+
+	<script type="module" src="/assets/js/ptw-cwl/addJsByCheckElement.js"></script>

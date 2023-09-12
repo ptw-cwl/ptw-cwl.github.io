@@ -12,15 +12,13 @@ assets: blog
 	<h1>{{ post.title }}</h1>
     <p><a href="/author/{{ post.author.name | downcase}}">{{ post.author.name }}</a>于 {{ post.date | date: "%Y年%m月%d日" }} 发布
 	</p>
-	<p>
 {% for tag in post.tags %}
 <a href="/archive/{{ tag | downcase }}" class="tag">{{ tag }}</a>
 {% endfor %}
-	</p>
 	<p>{{ post.content | strip_html | truncatewords: 10 }}</p>
 	</div>
 	<div class="blog-card-right">
-		<p><a href="{{post.url | absolute_url}}">阅读</a></p>
+		<a href="{{post.url | absolute_url}}">阅读</a>
 	</div>
   </div>
 {% endfor %}

@@ -3,12 +3,17 @@ title: 主页
 layout: default
 css: website
 ---
-<div class="sidebar">
-    <a href="#">Home</a>
-    <a href="#">About</a>
-    <a href="#">Services</a>
-    <a href="#">Contact</a>
-</div>
+<aside>
+	{% for website in site.websites %}
+	   {% unless website.isHide == true %}
+	        {% if isPresentSubcategory == true %}
+  <!-- 如果条件为真时的内容 -->
+			{% else %}
+               	  <a href="{{ website.url }}">{{ website.title }}</a>
+			{% endif %}
+	   {% endunless %}
+	{% endfor %}
+</aside>
 <div class="content">
-      
+      <iframe src="https://blog.csdn.net/qq_62701769/article/details/131781953" width="100%" height="100%" frameborder="0"></iframe>
 </div>

@@ -1,21 +1,20 @@
-a {
-  color: black;
-  text-decoration: none;
-  text-align: center;
-  transition: 0.3s;
-  @extend .centered-container;
-}
+@import "default";
 
-a:hover {
-  color: blue;
-}
+  ptw-cwl {
+    @extend .full-size;
+  }
 
 .full-size {
     width: 100vw;
     height: 100vh;
 }
 
-.centered-container {
+.centered-container-grid {
+  display: grid;
+  place-items: center; 
+}
+
+.centered-container-flex {
     display: flex;
     justify-content: center;
     align-items: center;

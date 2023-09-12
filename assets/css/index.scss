@@ -2,19 +2,12 @@
 ---
 @import "base";
 
-  .ptw-cwl {
-    @extend .full-size;
-    @extend .centered-container;
-  }
- 
-  .box {
-    width: 30%;
-    height: 30%;
-    @extend .centered-container;
+  ptw-cwl {
+    @extend .centered-container-flex;
     flex-direction: column;
   }
 
   .img {
-     width: 100%;
-     height: 80%;
+     width: 30%;
+     height: 30%;
   }

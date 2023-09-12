@@ -9,11 +9,9 @@ function updateClock() {
     const minutes = now.getMinutes();
     const seconds = now.getSeconds();
 
-    const currentDateElement = document.querySelector('.current-date');
-    const currentTimeElement = document.querySelector('.current-time');
+    const element = document.querySelector('ptw-cwl-clock');
 
-    currentDateElement.textContent = `${year}年${month}月${day}日  ${dayOfWeek}`;
-    currentTimeElement.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    element.textContent = `${year}年${month}月${day}日  ${dayOfWeek}  ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 }
 
 updateClock();

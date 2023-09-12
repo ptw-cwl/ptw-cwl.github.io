@@ -2,27 +2,21 @@
 ---
 @import "base";
 
-  .ptw-cwl {
-    @extend .full-size;
-    @extend .centered-container;
+  ptw-cwl {
+    @extend .centered-container-flex;
   }
 
     .container {
       text-align: center;
       padding: 5%;
-      background-color: white;
       border-radius: 8px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
-    h1 {
+    .container h1 {
       font-size: 72px;
     }
 
-    p {
+    .container p {
       font-size: 18px;
-    }
-
-    a {
-      color: #007bff;
     }
