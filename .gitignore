@@ -1,0 +1,15 @@
+_site/
+_plugins/*.rb
+*.bak
+.jekyll-cache/
+.sass-cache/
+Gemfile.lock
+test.bat
+test.html
+/assets/css/test.scss
+/assets/js/test.js
+/assets/scripts/test.rb
+
+
+
+

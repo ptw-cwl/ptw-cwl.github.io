@@ -1,3 +1,6 @@
+rem 作者: ptw-cwl
+rem 个人网站: ptw-cwl.com
+rem 如有侵权，请联系删除。
 
 rem 这是一个特殊的命令，它告诉批处理解释器在执行脚本时不要显示批处理命令本身。
 @echo off

@@ -1,3 +1,7 @@
+rem 作者: ptw-cwl
+rem 个人网站: ptw-cwl.com
+rem 如有侵权，请联系删除。
+
 @echo off
 chcp 65001 > nul
 setlocal

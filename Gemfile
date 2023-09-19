@@ -1,3 +1,7 @@
+#作者: ptw-cwl
+#个人网站: ptw-cwl.com
+#如有侵权，请联系删除。
+
 # frozen_string_literal: true
 
 # source "http://rubygems.org"

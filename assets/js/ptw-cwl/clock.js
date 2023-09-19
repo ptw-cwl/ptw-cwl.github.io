@@ -16,3 +16,9 @@ function updateClock() {
 
 updateClock();
 setInterval(updateClock, 1000);
+
+/*
+作者: ptw-cwl
+个人网站: ptw-cwl.com
+如有侵权，请联系删除。
+*/

@@ -1,0 +1,11 @@
+#作者: ptw-cwl
+#个人网站: ptw-cwl.com
+#如有侵权，请联系删除。
+
+require_relative '../assets/scripts/module'
+require_relative '../assets/scripts/process_csv'
+
+#在渲染整个网站之前运行
+Jekyll::Hooks.register :site, :pre_render do |site|
+  run('default')
+end

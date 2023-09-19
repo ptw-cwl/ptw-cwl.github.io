@@ -1,3 +1,7 @@
+#作者: ptw-cwl
+#个人网站: ptw-cwl.com
+#如有侵权，请联系删除。
+
 markdown: kramdown
 
 sass:
@@ -44,8 +48,8 @@ defaults:
   - scope:
       type: 'websites'
     values:
-      layout: base
-      permalink: "website/:title"
+      layout: website
+
 
   
 exclude:
@@ -60,3 +64,7 @@ exclude:
   - "*.bak"
   - "*.cfg"
   - "*.json"
+  - ptw-cwl.gitee.io
+  - ptw-cwl.github.io
+  - assets/scripts/
+  - assets/websites/
