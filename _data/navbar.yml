@@ -22,6 +22,8 @@ main:
     - name: "404页面"
       url: "/404"
       isHide: true
+    - name: "测试页面"
+      url: "/test"
     - name: "专栏"
       url: "/archive"
     - name: "作者"

@@ -3,21 +3,36 @@ title: 主页
 layout: default
 css: website
 ---
-<aside>
+ <aside>
 	{% for website in site.websites %}
 	   {% unless website.isHide == true %}
-	        {% if isPresentSubcategory == true %}
-  <!-- 如果条件为真时的内容 -->
-			{% else %}
-               	  <a href="{{ website.url }}">{{ website.title }}</a>
-			{% endif %}
+              <a href="{{ website.url }}">{{ website.title }}</a>
 	   {% endunless %}
 	{% endfor %}
 </aside>
 <div class="content">
-      <iframe src="https://blog.csdn.net/qq_62701769/article/details/131781953" width="100%" height="100%" frameborder="0"></iframe>
+	{% for website in site.websites %}
+	   {% unless website.isHide == true %}
+	      <p>---{{ website.title }}---</p>
+          {% for content in website.websites %}
+            {% unless content.isHide == true %}
+               <div class="card">
+                    <div class="card-content">
+                        <h2>{{ content.name }} </h2>
+                        <p><a href="{{ content.url }}">{{ content.url }}</a></p>
+                   </div>
+                   <div class="tags">
+                        <span class="tag">标签1</span>
+                        <span class="tag">标签2</span>
+                        <span class="tag">标签3</span>
+                    </div>
+               </div>
+            {% endunless %}
+	      {% endfor %}
+	      <p>-----------------------------------------------------------------</p>
+	   {% endunless %}
+	{% endfor %}
 </div>
-
 <!-- 作者: ptw-cwl -->
 <!-- 个人网站: ptw-cwl.com -->
 <!-- 如有侵权，请联系删除。 -->

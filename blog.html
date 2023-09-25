@@ -3,26 +3,25 @@ title: 博客
 layout: default
 assets: blog
 ---
-             <div class="container">
-                    <p>欢迎阅读ptw-cwl的博客文章,希望对你有所帮助! </p>
-			 </div>
-{% for post in site.posts %}
- <div class="blog-card">
- 	<div class="blog-card-left">
-	<h1>{{ post.title }}</h1>
-    <p><a href="/author/{{ post.author.name | downcase}}">{{ post.author.name }}</a>于 {{ post.date | date: "%Y年%m月%d日" }} 发布
-	</p>
-{% for tag in post.tags %}
-<a href="/archive/{{ tag | downcase }}" class="tag">{{ tag }}</a>
-{% endfor %}
-	<p>{{ post.content | strip_html | truncatewords: 10 }}</p>
-	</div>
-	<div class="blog-card-right">
-		<a href="{{post.url | absolute_url}}">阅读</a>
-	</div>
-  </div>
-{% endfor %}
-
+    <aside>
+	{% for website in site.websites %}
+	   {% unless website.isHide == true %}
+              <a href="{{ website.url }}">{{ website.title }}</a>
+	   {% endunless %}
+	{% endfor %}
+</aside>
+<div class="content">
+	{% for website in site.websites %}
+	   {% unless website.isHide == true %}
+             	{% for content in page.websites %}
+        {% unless content.isHide == true %}
+        <p>{{ content.name }} : <a href="{{ content.url }}">{{ content.url }}</a></p>
+        {% endunless %}
+	{% endfor %}
+		<p>-----------------------------------------------------------------</p>
+	   {% endunless %}
+	{% endfor %}
+</div>
 <!-- 作者: ptw-cwl -->
 <!-- 个人网站: ptw-cwl.com -->
 <!-- 如有侵权，请联系删除。 -->

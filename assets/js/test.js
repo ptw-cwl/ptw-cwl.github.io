@@ -1,6 +1,3 @@
-@import "ptw-cwl";
-@import "component";
-
 /*
 作者: ptw-cwl
 个人网站: ptw-cwl.com

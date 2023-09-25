@@ -1,26 +1,6 @@
 ---
 ---
-@import "default";
-
-aside {
-    height: 100%;
-    width: 100px;
-    position: fixed;
-    left: 0;
-    padding-top: 20px;
-}
-
-aside a {
-  height: 70px;
-  width: 80px;
-}
-
-.content {
-    margin-left: 100px;
-    height: 100%;
-    width: calc(100% - 100px);
-}
-
+@import "base";
 
 .card {
     background-color: #fff;
@@ -30,6 +10,11 @@ aside a {
     max-width: 300px;
     margin: 20px auto;
     padding: 10px;
+}
+
+.card img {
+    max-width: 100%;
+    height: auto;
 }
 
 .card-content h2 {
@@ -55,6 +40,7 @@ aside a {
     font-size: 12px;
     margin-right: 5px;
 }
+
 
 /*
 作者: ptw-cwl

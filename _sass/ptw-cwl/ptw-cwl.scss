@@ -1,0 +1,39 @@
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    box-sizing: border-box;
+    color: #333;
+    background-color: #fff;
+    font-family: 'Open Sans', sans-serif;
+}
+
+
+html {
+    overflow-x: hidden;
+}
+
+head {
+    display: none;
+}
+
+html,body {
+    display: block;
+}
+
+body{
+   min-width: 100vw;
+   min-height: 100vh;
+}
+
+a {
+   text-decoration: none;
+   transition: 0.3s;
+   cursor: pointer;
+}
+
+/*
+作者: ptw-cwl
+个人网站: ptw-cwl.com
+如有侵权，请联系删除。
+*/
