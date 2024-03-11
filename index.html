@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ptw-cwl</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">
+  <link rel="shortcut icon" href="/img/logo.png" type="image/x-icon" />
+</head>
+<body>
+  <div id="app">正在加载中...</div>
+  <script>
+    window.$docsify = {
+		loadNavbar: true,
+		loadSidebar: true,
+		coverpage: true,
+		onlyCover: true,
+		subMaxLevel: 2,
+		catchPluginErrors: true,
+		name: 'ptw-cwl的个人网站',
+		copyCode: {
+          buttonText: '点击复制',
+		  errorText: '错误',
+		  successText: '已复制',
+		},
+		timeUpdater: {
+			text: ">最后更新时间: {docsify-updated}",
+			formatUpdated: "{YYYY}/{MM}/{DD} {HH}:{mm}:{ss}",
+			whereToPlace: "bottom", 
+		},
+		 tabs: {
+			persist: true, 
+			sync: true, 
+			theme: 'classic', 
+			tabComments: true, 
+			tabHeadings: true 
+		},
+		hideCode: {
+			scroll: false, 
+			height: 200 
+        }
+    }
+  </script>
+  <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-java.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-linux.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-sql.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-yaml.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-xml.min.js"></script>
+
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/emoji.min.js"></script>
+
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/external-script.min.js"></script>
+
+  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/docsify-updated/src/time-updater.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/docsify-hide-code/dist/docsify-hide-code.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/docsify-tabs@1"></script>
+  <style>
+  :root {
+    --docsifytabs-border-color: #ededed;
+    --docsifytabs-tab-highlight-color: purple;
+  }
+  </style>
+
+  <script>
+  if (typeof navigator.serviceWorker !== 'undefined') {
+    navigator.serviceWorker.register('sw.js')
+  }
+  </script>
+
+</body>
+</html>
