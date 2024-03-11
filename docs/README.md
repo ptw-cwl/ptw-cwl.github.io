@@ -2,7 +2,8 @@
 
 #### **问题**
 
-[sourceTree安装后打不开问题的解决](/docs/sourceTree安装后打不开问题的解决/)
+- [sourceTree安装后打不开问题的解决](/docs/sourceTree安装后打不开问题的解决/)
+- [如何添加网站Favicon图标](/docs/如何添加网站Favicon图标/)
 
 #### **暂定1**
 
