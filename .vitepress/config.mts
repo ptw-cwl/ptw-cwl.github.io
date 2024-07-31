@@ -95,7 +95,7 @@ export default defineConfig({
       { icon: 'github', link: 'https://github.com/ptw-cwl' }
     ],
     editLink: {
-      pattern: 'https://github.com/ptw-cwl/ptw-cwl.github.io/edit/main/docs/:path',
+      pattern: 'https://github.com/ptw-cwl/ptw-cwl.github.io/edit/main/:path',
       text: '在 GitHub 上编辑此页面'
     },
     lastUpdated: {
