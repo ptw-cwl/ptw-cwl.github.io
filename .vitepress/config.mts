@@ -95,13 +95,7 @@ export default defineConfig({
       { icon: 'github', link: 'https://github.com/ptw-cwl' }
     ],
     editLink: {
-      pattern: ({ filePath }) => {
-        if (filePath.startsWith('packages/')) {
-          return `https://github.com/ptw-cwl/edit/main/${filePath}`
-        } else {
-          return `https://github.com/ptw-cwl/edit/main/docs/${filePath}`
-        }
-      },
+      pattern: 'https://github.com/ptw-cwl/ptw-cwl.github.io/edit/main/docs/:path',
       text: '在 GitHub 上编辑此页面'
     },
     lastUpdated: {
