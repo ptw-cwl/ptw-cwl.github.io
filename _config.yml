@@ -1,0 +1,26 @@
+author: ptw-cwl
+title: ptw-cwl
+subTitle: 言黎
+description: 言黎的个人博客
+icon: "/assets/image/icon.png"
+keywords:
+  - "ptw-cwl"
+  - "言黎"
+  - "个人博客"
+  - "技术分享"
+
+
+plugins:
+  - jekyll-feed
+
+exclude:
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
