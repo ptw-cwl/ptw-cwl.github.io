@@ -13,6 +13,9 @@ keywords:
 plugins:
   - jekyll-feed
 
+include:
+ - assets/  
+
 exclude:
   - .sass-cache/
   - .jekyll-cache/
