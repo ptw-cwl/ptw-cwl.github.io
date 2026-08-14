@@ -1,0 +1,39 @@
+baseURL = 'https://ptw-cwl.github.io/'
+locale = 'zh-cn'
+title = 'PTW 的个人博客'
+
+# 文章列表页
+paginate = 10
+
+# 内容分类
+[taxonomies]
+  tag = 'tags'
+
+# Markdown 渲染
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true # 允许文章内直接使用 HTML
+
+[params]
+  description = '记录技术学习与日常思考'
+  author = 'PTW'
+  github = 'https://github.com/ptw-cwl'
+
+[menu]
+  [[menu.main]]
+    name = '首页'
+    pageRef = '/'
+    weight = 1
+  [[menu.main]]
+    name = '归档'
+    pageRef = '/posts'
+    weight = 2
+  [[menu.main]]
+    name = '标签'
+    pageRef = '/tags'
+    weight = 3
+  [[menu.main]]
+    name = '关于'
+    pageRef = '/about'
+    weight = 4

@@ -1,0 +1,30 @@
+{{ define "title" }}{{ .Title }} - {{ .Site.Title }}{{ end }}
+{{ define "main" }}
+<section class="page-head">
+  <h1>{{ .Title }}</h1>
+  {{ with .Content }}<div class="page-content">{{ . }}</div>{{ end }}
+</section>
+
+{{ range .Paginator.Pages }}
+  <article class="post-item">
+    <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+    <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+    <p class="excerpt">{{ .Summary | plainify | truncate 120 }}</p>
+    {{ with .Params.tags }}
+      <p class="tags">
+        {{ range . }}<a class="tag" href="{{ "tags/" | relLangURL }}{{ . | urlize }}">#{{ . }}</a>{{ end }}
+      </p>
+    {{ end }}
+  </article>
+{{ else }}
+  <p>这里还没有内容。</p>
+{{ end }}
+
+{{ if gt .Paginator.TotalPages 1 }}
+<nav class="pagination">
+  {{ with .Paginator.Prev }}<a href="{{ .URL }}">← 上一页</a>{{ end }}
+  <span>{{ .Paginator.PageNumber }} / {{ .Paginator.TotalPages }}</span>
+  {{ with .Paginator.Next }}<a href="{{ .URL }}">下一页 →</a>{{ end }}
+</nav>
+{{ end }}
+{{ end }}

@@ -1,0 +1,8 @@
+{{ define "title" }}页面不存在 - {{ .Site.Title }}{{ end }}
+{{ define "main" }}
+<section class="hero">
+  <h1>404</h1>
+  <p>页面不存在或已被移除。</p>
+  <a class="btn" href="{{ .Site.Home.RelPermalink }}">返回首页</a>
+</section>
+{{ end }}

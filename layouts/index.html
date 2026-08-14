@@ -1,0 +1,21 @@
+{{ define "title" }}{{ .Site.Title }} - {{ .Site.Params.description }}{{ end }}
+{{ define "main" }}
+<section class="hero">
+  <h1>你好，我是 {{ .Site.Params.author }} 👋</h1>
+  <p>{{ .Site.Params.description }}</p>
+  {{ with .Site.Params.github }}<a class="btn" href="{{ . }}" target="_blank" rel="noopener">GitHub</a>{{ end }}
+</section>
+
+<section class="recent">
+  <h2>最新文章</h2>
+  {{ range first 5 (where .Site.RegularPages "Section" "posts") }}
+    <article class="post-item">
+      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+      <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+      <p class="excerpt">{{ .Summary | plainify | truncate 120 }}</p>
+    </article>
+  {{ else }}
+    <p>暂无文章，快去写第一篇吧！</p>
+  {{ end }}
+</section>
+{{ end }}
