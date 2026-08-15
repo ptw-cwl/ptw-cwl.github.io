@@ -1,9 +1,11 @@
+{{/* 分类聚合页模板：列出所有标签及其文章数 */}}
 {{ define "title" }}{{ .Title }} - {{ .Site.Title }}{{ end }}
 {{ define "main" }}
 <section class="page-head">
   <h1>{{ .Title }}</h1>
 </section>
 <div class="tag-cloud">
+  {{/* 按文章数量从多到少排列标签 */}}
   {{ range .Data.Terms.ByCount }}
     <a class="tag" href="{{ .Page.RelPermalink }}">#{{ .Page.Title }} ({{ .Count }})</a>
   {{ end }}

@@ -1,16 +1,27 @@
-# 推送 main 分支后自动构建 Hugo 并部署到 GitHub Pages
+# ============================================================
+# 部署流程：推送到 main 分支后，自动构建 Hugo 并发布到 GitHub Pages
+#
+# 触发方式：
+#   1. 推送代码到 main 分支（自动）
+#   2. 在仓库 Actions 页面手动运行（可选）
+#
+# 配置要求（只需在 GitHub 网页上设置一次）：
+#   Settings -> Pages -> Source 选择 "GitHub Actions"
+# ============================================================
 name: Deploy Hugo site to Pages
 
 on:
   push:
-    branches: ["main"]
-  workflow_dispatch: # 允许在 Actions 页手动触发
+    branches: ["main"]   # main 分支有推送时触发
+  workflow_dispatch:     # 允许在 Actions 页面手动触发
 
+# 工作流所需的最小权限
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: read          # 读取仓库代码
+  pages: write            # 写入 Pages 部署
+  id-token: write         # 用于 GitHub 鉴权部署
 
+# 同一时间只允许一个部署运行，避免互相覆盖
 concurrency:
   group: "pages"
   cancel-in-progress: false
@@ -20,10 +31,11 @@ defaults:
     shell: bash
 
 jobs:
+  # ---------- 任务一：构建站点 ----------
   build:
     runs-on: ubuntu-latest
     env:
-      HUGO_VERSION: 0.165.0 # 与本地 hugo.exe 版本保持一致
+      HUGO_VERSION: 0.165.0   # 与本地 hugo.exe 版本保持一致
     steps:
       - name: Install Hugo CLI
         run: |
@@ -44,8 +56,9 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./public
+          path: ./public    # 上传 Hugo 构建产物
 
+  # ---------- 任务二：发布到 Pages（依赖构建成功） ----------
   deploy:
     environment:
       name: github-pages

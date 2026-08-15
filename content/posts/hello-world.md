@@ -15,15 +15,17 @@ draft: false
 
 ## 如何写新文章
 
-在项目根目录执行：
+在项目根目录执行（本机 Hugo 路径）：
 
 ```bash
-hugo new posts/my-new-post.md
+D:\app\hugo_0.165.0_windows-amd64\hugo.exe new posts/my-new-post.md
 ```
 
 然后编辑 `content/posts/my-new-post.md`，写完执行：
 
 ```bash
-hugo server -D   # 本地预览
-hugo            # 生成静态文件到 public/
+D:\app\hugo_0.165.0_windows-amd64\hugo.exe server -D   # 本地预览
+D:\app\hugo_0.165.0_windows-amd64\hugo.exe             # 生成静态文件到 public/
 ```
+
+推送到 GitHub 后，Actions 会自动构建并部署到线上。

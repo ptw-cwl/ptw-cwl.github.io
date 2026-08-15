@@ -1,3 +1,4 @@
+{{/* 单页模板：文章详情页 / 关于页等 */}}
 {{ define "title" }}{{ .Title }} - {{ .Site.Title }}{{ end }}
 {{ define "main" }}
 <article class="post">
@@ -5,14 +6,21 @@
     <h1>{{ .Title }}</h1>
     <p class="post-meta">
       <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+      {{/* 文章标签，链接到对应标签页 */}}
       {{ with .Params.tags }}
-        · {{ range . }}<a href="{{ "tags/" | relLangURL }}{{ . | urlize }}">#{{ . }}</a>{{ end }}
+        · {{ range . }}
+          {{ $tag := . }}
+          {{ with site.GetPage (printf "/tags/%s" $tag) }}
+            <a href="{{ .RelPermalink }}">#{{ $tag }}</a>
+          {{ end }}
+        {{ end }}
       {{ end }}
     </p>
   </header>
   <div class="post-content">
     {{ .Content }}
   </div>
+  {{/* 同分类下上一篇/下一篇（仅存在时才显示） */}}
   {{ if or .PrevInSection .NextInSection }}
   <nav class="post-nav">
     {{ with .PrevInSection }}<a href="{{ .RelPermalink }}">← {{ .Title }}</a>{{ end }}

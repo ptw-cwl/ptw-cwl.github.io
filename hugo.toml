@@ -1,25 +1,38 @@
+# ==============================================
+# Hugo 站点配置
+# 修改后执行 `hugo` 即可重新构建
+# ==============================================
+
+# 部署域名（GitHub Pages 使用，与仓库名一致）
 baseURL = 'https://ptw-cwl.github.io/'
+
+# 站点语言
 locale = 'zh-cn'
+
+# 站点标题（显示在页头和浏览器标签页）
 title = 'PTW 的个人博客'
 
-# 文章列表页
+# 每页显示的文章数量（归档/标签列表分页）
 paginate = 10
 
-# 内容分类
+# 内容分类：文章 front matter 中可写 tags: ["标签名"]
 [taxonomies]
   tag = 'tags'
 
-# Markdown 渲染
+# Markdown 渲染设置
 [markup]
   [markup.goldmark]
     [markup.goldmark.renderer]
-      unsafe = true # 允许文章内直接使用 HTML
+      # 允许在 Markdown 中直接嵌入 HTML（默认关闭，仅按需开启）
+      unsafe = true
 
+# 站点参数（模板中通过 .Site.Params.xxx 访问）
 [params]
-  description = '记录技术学习与日常思考'
-  author = 'PTW'
-  github = 'https://github.com/ptw-cwl'
+  description = '记录技术学习与日常思考'      # 站点描述（用于 SEO 与首页）
+  author = 'PTW'                              # 作者名（页脚显示）
+  github = 'https://github.com/ptw-cwl'       # GitHub 链接（首页按钮）
 
+# 顶部导航菜单（weight 越小越靠前）
 [menu]
   [[menu.main]]
     name = '首页'

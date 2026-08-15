@@ -1,3 +1,4 @@
+{{/* 列表页模板：归档/标签分类下的文章列表，含分页 */}}
 {{ define "title" }}{{ .Title }} - {{ .Site.Title }}{{ end }}
 {{ define "main" }}
 <section class="page-head">
@@ -5,14 +6,21 @@
   {{ with .Content }}<div class="page-content">{{ . }}</div>{{ end }}
 </section>
 
+{{/* 遍历当前页的文章（Hugo 自动分页） */}}
 {{ range .Paginator.Pages }}
   <article class="post-item">
     <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
     <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
     <p class="excerpt">{{ .Summary | plainify | truncate 120 }}</p>
+    {{/* 显示文章标签，链接到对应标签页 */}}
     {{ with .Params.tags }}
       <p class="tags">
-        {{ range . }}<a class="tag" href="{{ "tags/" | relLangURL }}{{ . | urlize }}">#{{ . }}</a>{{ end }}
+        {{ range . }}
+          {{ $tag := . }}
+          {{ with site.GetPage (printf "/tags/%s" $tag) }}
+            <a class="tag" href="{{ .RelPermalink }}">#{{ $tag }}</a>
+          {{ end }}
+        {{ end }}
       </p>
     {{ end }}
   </article>
@@ -20,6 +28,7 @@
   <p>这里还没有内容。</p>
 {{ end }}
 
+{{/* 超过一页时显示分页导航 */}}
 {{ if gt .Paginator.TotalPages 1 }}
 <nav class="pagination">
   {{ with .Paginator.Prev }}<a href="{{ .URL }}">← 上一页</a>{{ end }}
