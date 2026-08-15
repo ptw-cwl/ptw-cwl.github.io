@@ -90,6 +90,7 @@ a:hover { text-decoration: underline; }
 /* ---------- 文章条目 ---------- */
 .post-item { padding: 16px 0; border-bottom: 1px solid var(--border); }
 .post-item:last-child { border-bottom: none; }
+.post-item .post-meta { margin: 0 0 4px; }
 .post-item time { color: var(--muted); font-size: 0.85rem; }
 .post-item h2, .post-item h3 { margin: 4px 0 8px; font-size: 1.15rem; }
 .post-item h2 a, .post-item h3 a { color: var(--fg); }

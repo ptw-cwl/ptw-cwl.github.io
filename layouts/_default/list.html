@@ -9,7 +9,8 @@
 {{/* 遍历当前页的文章（Hugo 自动分页） */}}
 {{ range .Paginator.Pages }}
   <article class="post-item">
-    <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+    {{ $create := .Params.createTime | default .Date }}
+    <p class="post-meta">{{ .Site.Params.author }} · <time datetime="{{ $create.Format "2006-01-02 15:04:05" }}">{{ $create.Format "2006-01-02 15:04:05" }}</time></p>
     <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
     <p class="excerpt">{{ .Summary | plainify | truncate 120 }}</p>
     {{/* 显示文章标签，链接到对应标签页 */}}

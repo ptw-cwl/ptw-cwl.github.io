@@ -3,9 +3,17 @@
 {{ define "main" }}
 <article class="post">
   <header class="post-header">
+    {{/* 时间取自 front matter 的 createTime/updateTime，缺失时回退到 date/lastmod */}}
+    {{ $create := .Params.createTime | default .Date }}
+    {{ $update := .Params.updateTime | default .Lastmod }}
     <h1>{{ .Title }}</h1>
     <p class="post-meta">
-      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+      {{ .Site.Params.author }}
+      · 创建于 <time datetime="{{ $create.Format "2006-01-02 15:04:05" }}">{{ $create.Format "2006-01-02 15:04:05" }}</time>
+      {{/* 有更新时间且晚于创建时间时才显示 */}}
+      {{ if $update.After $create }}
+        · 更新于 <time datetime="{{ $update.Format "2006-01-02 15:04:05" }}">{{ $update.Format "2006-01-02 15:04:05" }}</time>
+      {{ end }}
       {{/* 文章标签，链接到对应标签页 */}}
       {{ with .Params.tags }}
         · {{ range . }}
