@@ -14,16 +14,18 @@
       {{ if $update.After $create }}
         · 更新于 <time datetime="{{ $update.Format "2006-01-02 15:04:05" }}">{{ $update.Format "2006-01-02 15:04:05" }}</time>
       {{ end }}
-      {{/* 文章标签，链接到对应标签页 */}}
-      {{ with .Params.tags }}
-        · {{ range . }}
+    </p>
+    {{/* 文章标签单独一行，链接到对应标签页 */}}
+    {{ with .Params.tags }}
+      <p class="tags">
+        {{ range . }}
           {{ $tag := . }}
           {{ with site.GetPage (printf "/tags/%s" $tag) }}
-            <a href="{{ .RelPermalink }}">#{{ $tag }}</a>
+            <a class="tag" href="{{ .RelPermalink }}">#{{ $tag }}</a>
           {{ end }}
         {{ end }}
-      {{ end }}
-    </p>
+      </p>
+    {{ end }}
   </header>
   <div class="post-content">
     {{ .Content }}

@@ -9,6 +9,10 @@ baseURL = 'https://ptw-cwl.github.io/'
 # 站点语言
 locale = 'zh-cn'
 
+# 站点时区：front matter 中不带时区的时间按 Asia/Shanghai 解析
+# （不设的话 Hugo 会当成 UTC，比本地晚 8 小时，新文章会被误判为"未来文章"而不显示）
+timeZone = 'Asia/Shanghai'
+
 # 站点标题（显示在页头和浏览器标签页）
 title = '言黎的个人博客'
 
