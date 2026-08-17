@@ -1,0 +1,68 @@
+---
+title: "Windows 装 Hugo 踩坑记"
+createTime: 2026-08-17 09:49:30
+updateTime: 2026-08-17 12:30:00
+tags: ["Hugo", "Windows"]
+draft: false
+---
+
+装 Hugo 的时候踩了三个坑：winget 装不上、PATH 加错、exe 被杀软清成 0 字节。过程记下来，下次换机器能少折腾。
+
+## 坑一：winget 装不上，直接下二进制
+
+先试 winget：
+
+```cmd
+winget install Hugo.Hugo.Extended
+```
+
+报"打开源时失败"。winget 的源在海外，国内网络经常连不上，`winget source reset --force` 也救不回来。绕开包管理器，去 [Hugo Releases](https://github.com/gohugoio/hugo/releases) 下 `hugo_extended_0.165.0_windows-amd64.zip`，解压出 `hugo.exe`，放到 `D:\app\hugo_0.165.0_windows-amd64\`。
+
+选 **Extended** 版，后面用 SCSS 或模板特性才不卡。先验证文件本身没问题：
+
+```cmd
+D:\app\hugo_0.165.0_windows-amd64\hugo.exe version
+```
+
+能输出版本号，说明文件是好的。
+
+## 坑二：PATH 里加的是文件不是目录
+
+把 `hugo.exe` 所在目录加进 PATH 后，`hugo version` 还是"不是内部或外部命令"。`echo %Path%` 一看，加进去的是：
+
+```
+D:\app\hugo_0.165.0_windows-amd64\hugo.exe
+```
+
+Windows 的 PATH 只认目录，不认文件。cmd 找 `hugo.exe` 时把这行当目录进去翻，里面当然没有。改成目录就行：
+
+```
+D:\app\hugo_0.165.0_windows-amd64
+```
+
+还有两个细节：
+
+- 改完 PATH 必须**新开终端**，旧窗口不刷新
+- `echo %Path%` 是窗口打开那一刻的快照，GUI 改了旧窗口无效，有时还得刷新资源管理器：`taskkill /f /im explorer.exe & start explorer.exe`
+
+## 坑三：exe 被杀软清成 0 字节
+
+PATH 修好后，`hugo version` 报"拒绝访问"，双击弹"此应用无法在你的电脑上运行"。第一反应是版本不兼容，但 `echo %PROCESSOR_ARCHITECTURE` 是 `AMD64`，而且第一次明明跑通过。`dir` 一看真相：
+
+```
+2026/08/14  17:34                 0 hugo.exe
+```
+
+**0 字节**。第一次跑成功之后，杀软（大概率 Windows Defender 云保护）把文件内容静默清空，只留空壳。这种清除经常不在"保护历史记录"里留条目，一开始根本查不出来。处理：
+
+1. 目录加进杀软白名单，不然重下还会被清：
+
+   ```powershell
+   Add-MpPreference -ExclusionPath "D:\app\hugo_0.165.0_windows-amd64"
+   ```
+
+2. 重新下载解压。下完先右键 zip → 属性 → 解除锁定，再解压
+3. `dir` 确认大小是几十 MB，再跑 `hugo version` 验证
+
+
+> 写于 2026 年 8 月，Hugo 0.165.0 + Windows 10。杀软和包管理器的行为以后可能变，以实际为准。
