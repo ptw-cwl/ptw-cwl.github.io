@@ -1,44 +1,47 @@
 ﻿# =============================================
-# 文章生成脚本（new-post）
-# 按命名规范 {type}_{rand5}_{unix_ts} 生成文章文件，并在 front matter 写入 id（与文件名一致）
+# new-post.ps1 - create a new post file
+# Generate file named {type}_{rand5}_{unix_ts} and write front matter with id (same as filename).
 #
-# 用法（仓库根目录执行）：
-#   powershell -ExecutionPolicy Bypass -File scripts\new-post.ps1 -Title "文章标题"
-#   powershell -ExecutionPolicy Bypass -File scripts\new-post.ps1 -Title "文章标题" -Published
+# Usage (run from repo root):
+#   powershell -ExecutionPolicy Bypass -File scripts\new-post.ps1 -Title "Article Title"
+#   powershell -ExecutionPolicy Bypass -File scripts\new-post.ps1 -Title "Article Title" -Published
 #
-# 参数：
-#   -Title      文章标题（必填，中文）
-#   -Type       固定值：post（默认，对应 content/posts/）/ about（对应 content/about/ 单页）
-#   -Published  传入则 draft=false 直接发布；默认 draft=true 为草稿
+# Params:
+#   -Title      Article title (required, may be Chinese)
+#   -Type       Fixed: post (default, -> content/posts/) or about (-> content/about/ single page)
+#   -Published  If passed, draft=false; default draft=true
 #
-# AI 创建与手动创建均可直接调用本脚本。
+# Both AI and manual call can use this script directly.
+# NOTE: per 02-encoding rule, this script is all-ASCII (no Chinese in code/comments/output)
+#       to stay safe under PowerShell 5.1 (GBK) default decoding. Title text may still be Chinese.
 # =============================================
 
 param(
     [Parameter(Mandatory = $true)][string]$Title,
     [string]$Type = "post",
-    [switch]$Published
+    [switch]$Published,
+    [switch]$Syndicate
 )
 
-# 固定值 -> content 子目录映射（新增 content 目录时在此登记）
+# type -> content subdir map (register new content dirs here)
 $sectionMap = @{
     "post"  = "posts"
     "about" = "about"
 }
 
 if (-not $sectionMap.ContainsKey($Type)) {
-    Write-Host "错误：未知类型 '$Type'，仅支持：$($sectionMap.Keys -join ' / ')" -ForegroundColor Red
+    Write-Host "ERROR: unknown type '$Type'; supported: $($sectionMap.Keys -join ' / ')" -ForegroundColor Red
     exit 1
 }
 
-# 生成 5 位 base36 随机串（小写字母 + 数字）
+# generate 5-char base36 random (lowercase letters + digits)
 $chars = "0123456789abcdefghijklmnopqrstuvwxyz"
 $rand5 = -join (1..5 | ForEach-Object { $chars[(Get-Random -Maximum 36)] })
 
-# 创建时间 Unix 时间戳（秒）
+# creation time as unix timestamp (seconds)
 $ts = [DateTimeOffset]::Now.ToUnixTimeSeconds()
 
-# id = 固定值_随机串_时间戳，与文件名保持一致
+# id = type_rand5_ts, keep identical to filename
 $id = "$Type`_$rand5`_$ts"
 
 $section = $sectionMap[$Type]
@@ -47,9 +50,9 @@ if (-not (Test-Path $dir)) {
     New-Item -ItemType Directory -Path $dir -Force | Out-Null
 }
 
-# about 为单页：文件名固定 index.md，已存在时只提示补 id，不覆盖
+# about is a single page: fixed index.md; if exists, only hint to fill id, do not overwrite
 if ($Type -eq "about" -and (Test-Path (Join-Path $dir "index.md"))) {
-    Write-Host "提示：about 单页已存在（content\about\index.md），请在 front matter 中手动补充 id: $id" -ForegroundColor Yellow
+    Write-Host "HINT: about page exists (content\about\index.md); manually add id: $id to its front matter" -ForegroundColor Yellow
     exit 0
 }
 
@@ -60,6 +63,21 @@ $localTime = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
 $escapedTitle = $Title.Replace('"', '\"')
 $draft = if ($Published) { "false" } else { "true" }
 
+# syndicate skeleton: default publish=false per platform (never auto-publish)
+$syndicateBlock = if ($Syndicate) {
+@"
+syndicate: true
+platforms:
+  - name: baijiahao
+    publish: false
+    converted: false
+    pid: ""
+    status: draft
+    publishedAt: ""
+    url: ""
+"@
+} else { "" }
+
 $content = @"
 ---
 title: "$escapedTitle"
@@ -69,16 +87,16 @@ updateTime: $localTime
 tags: []
 description: ""
 draft: $draft
+$syndicateBlock
 ---
 
 "@
 
-# 以无 BOM 的 UTF-8 写入（避免 Hugo 解析 BOM 异常，兼容中文内容）
+# write as UTF-8 without BOM (avoids Hugo BOM parse issue; Chinese content in output is fine)
 $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
 [System.IO.File]::WriteAllText($filePath, $content, $utf8NoBom)
 
-Write-Host "已创建：$filePath"
-Write-Host "id：$id"
-Write-Host "下一步：补充 description（50-100 字）、tags 与正文，完成后把 draft 改为 false 即可发布"
-Write-Host "注意：tags 请写英文短码（如 notes / ai-tool / hugo），并在 data/tag_display.yaml 登记中文显示名；"
-Write-Host "      登记后运行  powershell -ExecutionPolicy Bypass -File scripts\check-tags.ps1  自检是否遗漏"
+Write-Host "CREATED: $filePath"
+Write-Host "id: $id"
+Write-Host "NEXT: fill description (50-100 chars), tags and body; then set draft to false to publish"
+Write-Host "NOTE: tags use English short codes (e.g. notes / ai-tool / hugo); register Chinese display name in data/tag_display.yaml"
