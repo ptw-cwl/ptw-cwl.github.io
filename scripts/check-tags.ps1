@@ -26,16 +26,35 @@ function Get-FrontMatterTags {
 
 $root = Resolve-Path (Join-Path $PSScriptRoot "..")
 $tagDisplayPath = Join-Path $root "data\tag_display.yaml"
-$postsDir = Join-Path $root "content\posts"
 $registered = Parse-TagDisplay -Path $tagDisplayPath
 $badKeys = @()
 foreach ($k in $registered.Keys) { if ($k -cne $k.ToLower()) { $badKeys += $k } }
-if (-not (Test-Path $postsDir)) { Write-Host "WARN: 未找到 posts 目录: $postsDir" -ForegroundColor Yellow; exit 0 }
+
+# 从 hugo.toml 解析 loadSections（内容加载白名单），遍历其下所有目录，
+# 与白名单保持一致，避免未来新增分类（如 notes）后漏校验
+$sections = @()
+$hugoToml = Join-Path $root "hugo.toml"
+if (Test-Path $hugoToml) {
+    $toml = Get-Content -Path $hugoToml -Encoding UTF8 -Raw
+    if ($toml -match 'loadSections\s*=\s*\[(.*?)\]') {
+        foreach ($s in ($Matches[1] -split ',')) {
+            $s = $s.Trim().Trim("'").Trim('"')
+            if ($s -ne '') { $sections += $s }
+        }
+    }
+}
+if ($sections.Count -eq 0) { $sections = @('posts', 'about') }
+Write-Host "INFO: 校验目录（loadSections）: $($sections -join ', ')" -ForegroundColor Cyan
+
 $unregistered = @(); $badFiles = @{}
-foreach ($file in (Get-ChildItem -Path $postsDir -Filter *.md)) {
-    $tags = Get-FrontMatterTags -Path $file.FullName; $missing = @()
-    foreach ($t in $tags) { if (-not $registered.ContainsKey($t)) { $missing += $t; if (-not $unregistered.Contains($t)) { $unregistered += $t } } }
-    if ($missing.Count -gt 0) { $badFiles[$file.Name] = $missing }
+foreach ($sec in $sections) {
+    $dir = Join-Path $root "content\$sec"
+    if (-not (Test-Path $dir)) { Write-Host "WARN: 未找到目录: $dir" -ForegroundColor Yellow; continue }
+    foreach ($file in (Get-ChildItem -Path $dir -Filter *.md)) {
+        $tags = Get-FrontMatterTags -Path $file.FullName; $missing = @()
+        foreach ($t in $tags) { if (-not $registered.ContainsKey($t)) { $missing += $t; if (-not $unregistered.Contains($t)) { $unregistered += $t } } }
+        if ($missing.Count -gt 0) { $badFiles[$file.Name] = $missing }
+    }
 }
 if ($badKeys.Count -eq 0 -and $badFiles.Count -eq 0) { Write-Host "OK: 所有文章标签均已登记，且映射 key 均为小写" -ForegroundColor Green; exit 0 }
 if ($badKeys.Count -gt 0) { Write-Host "FAIL: 存在非小写映射 key（必须全小写）：" -ForegroundColor Red; foreach ($k in $badKeys) { Write-Host "    - $k" -ForegroundColor Red }; Write-Host "" }

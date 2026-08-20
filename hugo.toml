@@ -35,6 +35,14 @@ paginate = 10
     [markup.goldmark.renderer]
       # 允许在 Markdown 中直接嵌入 HTML（默认关闭，仅按需开启）
       unsafe = true
+  [markup.highlight]
+    # 代码高亮使用 Hugo 内置 Chroma（无需外部 JS/CDN，保持纯静态）
+    # 样式名对应 CSS 中注入的 Chroma 主题；noClasses=false 让颜色走 class
+    noClasses = false
+    # 代码块语言在右上角显示，便于阅读
+    codeFences = true
+    lineNos = false
+    guessSyntax = false
 
 # 站点参数（模板中通过 .Site.Params.xxx 访问）
 [params]
