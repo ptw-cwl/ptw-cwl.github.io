@@ -1,26 +1,13 @@
-# =============================================
-# tags registration check (check-tags)
-# Scans content/posts/*.md front matter tags, ensures each tag is
-# registered in data/tag_display.yaml. Exits 1 if any tag is missing.
-#
-# Usage (run at repo root):
-#   powershell -ExecutionPolicy Bypass -File scripts\check-tags.ps1
-# =============================================
-
+﻿# 标签注册校验脚本 check-tags
 $ErrorActionPreference = "Stop"
 
 function Parse-TagDisplay {
     param([string]$Path)
     $map = @{}
-    if (-not (Test-Path $Path)) {
-        Write-Host "WARN: $Path not found, treating all tags as unregistered" -ForegroundColor Yellow
-        return $map
-    }
+    if (-not (Test-Path $Path)) { Write-Host "WARN: 未找到 $Path" -ForegroundColor Yellow; return $map }
     foreach ($line in (Get-Content -Path $Path -Encoding UTF8)) {
         if ($line -match '^\s*#|^\s*$') { continue }
-        if ($line -match '^\s*(?<k>[A-Za-z0-9_-]+)\s*:\s*"?(.+?)"?\s*$') {
-            $map[$Matches['k']] = $true
-        }
+        if ($line -match '^\s*(?<k>[A-Za-z0-9_-]+)\s*:\s*"?(.+?)"?\s*$') { $map[$Matches['k']] = $true }
     }
     return $map
 }
@@ -28,67 +15,29 @@ function Parse-TagDisplay {
 function Get-FrontMatterTags {
     param([string]$Path)
     $text = Get-Content -Path $Path -Encoding UTF8 -Raw
-    if ($text -notmatch '(?s)---\s*\n(.*?)\n---') {
-        return @()
-    }
+    if ($text -notmatch '(?s)---\s*\n(.*?)\n---') { return @() }
     $fm = $Matches[1]
-    if ($fm -notmatch '(?s)tags\s*:\s*\[(.*?)\]') {
-        return @()
-    }
-    $raw = $Matches[1]
-    $tags = @()
-    # match quoted tag values, avoiding literal double-quotes in source
+    if ($fm -notmatch '(?s)tags\s*:\s*\[(.*?)\]') { return @() }
+    $raw = $Matches[1]; $tags = @()
     $pattern = [regex]::new('\x22([^\x22]*)\x22')
-    foreach ($m in $pattern.Matches($raw)) {
-        if ($m.Groups[1].Value -ne '') { $tags += $m.Groups[1].Value }
-    }
+    foreach ($m in $pattern.Matches($raw)) { if ($m.Groups[1].Value -ne '') { $tags += $m.Groups[1].Value } }
     return $tags
 }
 
 $root = Resolve-Path (Join-Path $PSScriptRoot "..")
 $tagDisplayPath = Join-Path $root "data\tag_display.yaml"
 $postsDir = Join-Path $root "content\posts"
-
 $registered = Parse-TagDisplay -Path $tagDisplayPath
-
-if (-not (Test-Path $postsDir)) {
-    Write-Host "WARN: posts dir not found: $postsDir" -ForegroundColor Yellow
-    exit 0
-}
-
-$unregistered = @()
-$badFiles = @{}
-
+$badKeys = @()
+foreach ($k in $registered.Keys) { if ($k -cne $k.ToLower()) { $badKeys += $k } }
+if (-not (Test-Path $postsDir)) { Write-Host "WARN: 未找到 posts 目录: $postsDir" -ForegroundColor Yellow; exit 0 }
+$unregistered = @(); $badFiles = @{}
 foreach ($file in (Get-ChildItem -Path $postsDir -Filter *.md)) {
-    $tags = Get-FrontMatterTags -Path $file.FullName
-    $missing = @()
-    foreach ($t in $tags) {
-        if (-not $registered.ContainsKey($t)) {
-            $missing += $t
-            if (-not $unregistered.Contains($t)) { $unregistered += $t }
-        }
-    }
-    if ($missing.Count -gt 0) {
-        $badFiles[$file.Name] = $missing
-    }
+    $tags = Get-FrontMatterTags -Path $file.FullName; $missing = @()
+    foreach ($t in $tags) { if (-not $registered.ContainsKey($t)) { $missing += $t; if (-not $unregistered.Contains($t)) { $unregistered += $t } } }
+    if ($missing.Count -gt 0) { $badFiles[$file.Name] = $missing }
 }
-
-if ($badFiles.Count -eq 0) {
-    Write-Host "OK: all post tags are registered in data/tag_display.yaml" -ForegroundColor Green
-    exit 0
-}
-
-Write-Host "FAIL: found unregistered tags, please add them to data/tag_display.yaml" -ForegroundColor Red
-Write-Host ""
-foreach ($kv in $badFiles.GetEnumerator()) {
-    Write-Host "  $($kv.Key)" -ForegroundColor Red
-    foreach ($t in $kv.Value) {
-        Write-Host "    - unregistered: $t" -ForegroundColor Red
-    }
-}
-Write-Host ""
-Write-Host "Fix: add Chinese display names in data/tag_display.yaml, e.g."
-foreach ($t in $unregistered) {
-    Write-Host "  $t : `"fill-chinese-name`"" -ForegroundColor Yellow
-}
+if ($badKeys.Count -eq 0 -and $badFiles.Count -eq 0) { Write-Host "OK: 所有文章标签均已登记，且映射 key 均为小写" -ForegroundColor Green; exit 0 }
+if ($badKeys.Count -gt 0) { Write-Host "FAIL: 存在非小写映射 key（必须全小写）：" -ForegroundColor Red; foreach ($k in $badKeys) { Write-Host "    - $k" -ForegroundColor Red }; Write-Host "" }
+if ($badFiles.Count -gt 0) { Write-Host "FAIL: 发现未登记标签，请补充：" -ForegroundColor Red; Write-Host ""; foreach ($kv in $badFiles.GetEnumerator()) { Write-Host "  $($kv.Key)" -ForegroundColor Red; foreach ($t in $kv.Value) { Write-Host "    - 未登记: $t" -ForegroundColor Red } }; Write-Host ""; Write-Host "修复：在 data/tag_display.yaml 中补充中文显示名" -ForegroundColor Yellow; foreach ($t in $unregistered) { Write-Host "  $t" -ForegroundColor Yellow } }
 exit 1

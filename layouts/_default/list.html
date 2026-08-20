@@ -1,5 +1,12 @@
 {{/* 列表页模板：归档/标签分类下的文章列表，含分页 */}}
-{{ define "title" }}{{ .Title }} - {{ .Site.Title }}{{ end }}
+{{ define "title" }}
+  {{ $siteTitle := .Site.Title }}
+  {{ if eq .Kind "term" }}
+    {{ with index hugo.Data.tag_display .Data.Term }}{{ . }} - {{ $siteTitle }}{{ end }}
+  {{ else }}
+    {{ .Title }} - {{ $siteTitle }}
+  {{ end }}
+{{ end }}
 {{ define "main" }}
 {{/* 加载白名单控制：section 列表页（Kind 为 section）所属目录未登记在
     hugo.toml 的 [params] loadSections 时不渲染列表；标签聚合/标签页（taxonomy/term）不受影响 */}}
@@ -11,7 +18,10 @@
   <p>该分类暂未开放。</p>
 {{ else }}
 <section class="page-head">
-  <h1>{{ .Title }}</h1>
+  {{/* term 页（标签页）标题用显示映射查表，避免 Hugo 自动 title-case 成 Notes；同时修复 SEO <title> 显示英文 */}}
+  {{ $heading := .Title }}
+  {{ if eq .Kind "term" }}{{ with index hugo.Data.tag_display .Data.Term }}{{ $heading = . }}{{ end }}{{ end }}
+  <h1>{{ $heading }}</h1>
   {{ with .Content }}<div class="page-content">{{ . }}</div>{{ end }}
 </section>
 
@@ -19,8 +29,8 @@
 {{ range .Paginator.Pages }}
   <article class="post-item">
     {{ $create := .Params.createTime | default .Date }}
-    <p class="post-meta">{{ .Site.Params.author }} · <time datetime="{{ $create.Format "2006-01-02 15:04:05" }}">{{ $create.Format "2006-01-02 15:04:05" }}</time></p>
     <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+    <p class="post-meta">{{ .Site.Params.author }} · <time datetime="{{ $create.Format "2006-01-02 15:04:05" }}">{{ $create.Format "2006-01-02 15:04:05" }}</time></p>
     {{/* 摘要：优先取 front matter 的 description（作者控制字数），缺失时回退自动摘要 */}}
     {{ $excerpt := .Params.description | default .Summary }}
     <p class="excerpt">{{ $excerpt | plainify | truncate 120 }}</p>
