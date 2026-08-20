@@ -1,6 +1,14 @@
 {{/* 单页模板：文章详情页 / 关于页等 */}}
 {{ define "title" }}{{ .Title }} - {{ .Site.Title }}{{ end }}
 {{ define "main" }}
+{{/* 加载白名单控制：普通文章（Section 非空，如 posts）所属目录未登记在
+    hugo.toml 的 [params] loadSections 时不予渲染；
+    根级单页 bundle（如 about/index.md，Section 为空）不受此限制 */}}
+{{ $loadSections := .Site.Params.loadSections | default (slice "posts" "about") }}
+{{ if and (ne .Section "") (not (in $loadSections .Section)) }}
+  <section class="page-head"><h1>{{ .Title }}</h1></section>
+  <p>该内容所属分类暂未开放。</p>
+{{ else }}
 <article class="post">
   <header class="post-header">
     {{/* 时间取自 front matter 的 createTime/updateTime，缺失时回退到 date/lastmod */}}
@@ -38,4 +46,5 @@
   </nav>
   {{ end }}
 </article>
+{{ end }}
 {{ end }}

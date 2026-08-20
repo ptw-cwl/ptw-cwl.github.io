@@ -5,9 +5,13 @@
   <h1>{{ .Title }}</h1>
 </section>
 <div class="tag-cloud">
-  {{/* 按文章数量从多到少排列标签 */}}
+  {{/* 只统计加载白名单（hugo.toml 的 [params] loadSections）内文章的标签，按文章数量从多到少排列 */}}
+  {{ $loadSections := .Site.Params.loadSections | default (slice "posts" "about") }}
   {{ range .Data.Terms.ByCount }}
-    <a class="tag" href="{{ .Page.RelPermalink }}">#{{ .Page.Title }} ({{ .Count }})</a>
+    {{ $pages := where .Pages "Section" "in" $loadSections }}
+    {{ if gt (len $pages) 0 }}
+      <a class="tag" href="{{ .Page.RelPermalink }}">#{{ .Page.Title }} ({{ len $pages }})</a>
+    {{ end }}
   {{ end }}
 </div>
 {{ end }}

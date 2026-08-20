@@ -41,6 +41,9 @@ paginate = 10
   description = '记录技术学习与日常思考'      # 站点描述（用于 SEO 与首页）
   author = '言黎'                             # 作者名（页脚显示）
   github = 'https://github.com/ptw-cwl'       # GitHub 链接（首页按钮）
+  # 内容加载白名单：只有登记在此的 content 子目录才渲染/展示
+  # posts、about 默认加载；未登记的目录（如将来新建的 notes/）不会被首页、列表页、详情页渲染
+  loadSections = ['posts', 'about']
 
 # 顶部导航菜单（weight 越小越靠前）
 [menu]

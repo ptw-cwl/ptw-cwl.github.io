@@ -1,6 +1,15 @@
 {{/* 列表页模板：归档/标签分类下的文章列表，含分页 */}}
 {{ define "title" }}{{ .Title }} - {{ .Site.Title }}{{ end }}
 {{ define "main" }}
+{{/* 加载白名单控制：section 列表页（Kind 为 section）所属目录未登记在
+    hugo.toml 的 [params] loadSections 时不渲染列表；标签聚合/标签页（taxonomy/term）不受影响 */}}
+{{ $loadSections := .Site.Params.loadSections | default (slice "posts" "about") }}
+{{ if and (eq .Kind "section") (not (in $loadSections .Section)) }}
+  <section class="page-head">
+    <h1>{{ .Title }}</h1>
+  </section>
+  <p>该分类暂未开放。</p>
+{{ else }}
 <section class="page-head">
   <h1>{{ .Title }}</h1>
   {{ with .Content }}<div class="page-content">{{ . }}</div>{{ end }}
@@ -36,5 +45,6 @@
   <span>{{ .Paginator.PageNumber }} / {{ .Paginator.TotalPages }}</span>
   {{ with .Paginator.Next }}<a href="{{ .URL }}">下一页 →</a>{{ end }}
 </nav>
+{{ end }}
 {{ end }}
 {{ end }}

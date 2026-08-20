@@ -9,8 +9,9 @@
 
 <section class="recent">
   <h2>最新文章</h2>
-  {{/* 取 posts 目录下最新的 5 篇文章 */}}
-  {{ range first 5 (where .Site.RegularPages "Section" "posts") }}
+  {{/* 只取加载白名单（hugo.toml 的 [params] loadSections）内最新的 5 篇文章 */}}
+  {{ $loadSections := .Site.Params.loadSections | default (slice "posts" "about") }}
+  {{ range first 5 (where .Site.RegularPages "Section" "in" $loadSections) }}
     <article class="post-item">
       {{ $create := .Params.createTime | default .Date }}
       <p class="post-meta">{{ .Site.Params.author }} · <time datetime="{{ $create.Format "2006-01-02 15:04:05" }}">{{ $create.Format "2006-01-02 15:04:05" }}</time></p>
