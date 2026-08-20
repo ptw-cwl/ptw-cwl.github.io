@@ -10,7 +10,8 @@
   {{ range .Data.Terms.ByCount }}
     {{ $pages := where .Pages "Section" "in" $loadSections }}
     {{ if gt (len $pages) 0 }}
-      <a class="tag" href="{{ .Page.RelPermalink }}">#{{ .Page.Title }} ({{ len $pages }})</a>
+      {{ $label := index hugo.Data.tag_display .Name | default .Page.Title }}
+      <a class="tag" href="{{ .Page.RelPermalink }}">#{{ $label }} ({{ len $pages }})</a>
     {{ end }}
   {{ end }}
 </div>

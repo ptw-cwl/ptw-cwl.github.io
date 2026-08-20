@@ -1,0 +1,8 @@
+# 标签显示映射：英文短码（front matter 中 tags 使用） -> 中文显示名
+# 仅用于渲染时把英文标签显示为可读中文，不影响 URL（URL 始终用原生英文短码）
+# 约束：所有文章 front matter 中的 tags 都必须在此登记（可由 scripts/check-tags.ps1 校验）
+notes: "随笔"
+ai-tool: "AI 工具"
+hugo: "Hugo"
+windows: "Windows"
+codebuddy: "CodeBuddy"

@@ -28,8 +28,9 @@
       <p class="tags">
         {{ range . }}
           {{ $tag := . }}
+          {{ $label := index hugo.Data.tag_display $tag | default $tag }}
           {{ with site.GetPage (printf "/tags/%s" $tag) }}
-            <a class="tag" href="{{ .RelPermalink }}">#{{ $tag }}</a>
+            <a class="tag" href="{{ .RelPermalink }}">#{{ $label }}</a>
           {{ end }}
         {{ end }}
       </p>

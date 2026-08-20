@@ -80,3 +80,5 @@ $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
 Write-Host "已创建：$filePath"
 Write-Host "id：$id"
 Write-Host "下一步：补充 description（50-100 字）、tags 与正文，完成后把 draft 改为 false 即可发布"
+Write-Host "注意：tags 请写英文短码（如 notes / ai-tool / hugo），并在 data/tag_display.yaml 登记中文显示名；"
+Write-Host "      登记后运行  powershell -ExecutionPolicy Bypass -File scripts\check-tags.ps1  自检是否遗漏"
