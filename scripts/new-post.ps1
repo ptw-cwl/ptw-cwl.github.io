@@ -67,6 +67,7 @@ id: $id
 createTime: $localTime
 updateTime: $localTime
 tags: []
+description: ""
 draft: $draft
 ---
 
@@ -78,4 +79,4 @@ $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
 
 Write-Host "已创建：$filePath"
 Write-Host "id：$id"
-Write-Host "下一步：补充 tags 与正文，完成后把 draft 改为 false 即可发布"
+Write-Host "下一步：补充 description（50-100 字）、tags 与正文，完成后把 draft 改为 false 即可发布"
