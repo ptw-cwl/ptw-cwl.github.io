@@ -1,8 +1,10 @@
 {{/* 分类聚合页模板：列出所有标签及其文章数 */}}
-{{ define "title" }}{{ .Title }} - {{ .Site.Title }}{{ end }}
+{{ define "title" }}标签 - {{ .Site.Title }}{{ end }}
+{{ define "ogtitle" }}标签{{ end }}
+{{ define "twtitle" }}标签{{ end }}
 {{ define "main" }}
 <section class="page-head">
-  <h1>{{ .Title }}</h1>
+  <h1>标签</h1>
 </section>
 <div class="tag-cloud">
   {{/* 只统计加载白名单（hugo.toml 的 [params] loadSections）内文章的标签，按文章数量从多到少排列 */}}
@@ -10,7 +12,7 @@
   {{ range .Data.Terms.ByCount }}
     {{ $pages := where .Pages "Section" "in" $loadSections }}
     {{ if gt (len $pages) 0 }}
-      {{ $label := index hugo.Data.tag_display .Name | default .Page.Title }}
+      {{ $label := index hugo.Data.tag_display .Name | default .Name }}
       <a class="tag" href="{{ .Page.RelPermalink }}">#{{ $label }} ({{ len $pages }})</a>
     {{ end }}
   {{ end }}

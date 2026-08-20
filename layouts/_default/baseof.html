@@ -4,7 +4,21 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ block "title" . }}{{ .Site.Title }}{{ end }}</title>
+  {{/* 描述：文章/页面优先取自己的 description，缺失回退站点描述 */}}
   <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+  {{/* 规范链接：避免带/不带尾部斜杠被爬虫当作重复内容 */}}
+  <link rel="canonical" href="{{ .Permalink }}">
+  {{/* Open Graph：社交分享卡片（微信/Telegram/X 等） */}}
+  <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+  <meta property="og:title" content="{{ block "ogtitle" . }}{{ .Title }}{{ end }}">
+  <meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+  <meta property="og:url" content="{{ .Permalink }}">
+  <meta property="og:site_name" content="{{ .Site.Title }}">
+  <meta property="og:locale" content="zh_CN">
+  {{/* Twitter Card */}}
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="{{ block "twtitle" . }}{{ .Title }}{{ end }}">
+  <meta name="twitter:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
   {{/* RSS 订阅链接（站点支持 /index.xml） */}}
   {{ with .OutputFormats.Get "rss" }}
     <link rel="alternate" type="{{ .MediaType.Type }}" href="{{ .Permalink }}" title="{{ $.Site.Title }}">

@@ -2,10 +2,17 @@
 {{ define "title" }}
   {{ $siteTitle := .Site.Title }}
   {{ if eq .Kind "term" }}
-    {{ with index hugo.Data.tag_display .Data.Term }}{{ . }} - {{ $siteTitle }}{{ end }}
+    {{ $label := index hugo.Data.tag_display .Data.Term | default .Data.Term }}
+    {{ $label }} - {{ $siteTitle }}
   {{ else }}
     {{ .Title }} - {{ $siteTitle }}
   {{ end }}
+{{ end }}
+{{ define "ogtitle" }}
+  {{ if eq .Kind "term" }}{{ index hugo.Data.tag_display .Data.Term | default .Data.Term }}{{ else }}{{ .Title }}{{ end }}
+{{ end }}
+{{ define "twtitle" }}
+  {{ if eq .Kind "term" }}{{ index hugo.Data.tag_display .Data.Term | default .Data.Term }}{{ else }}{{ .Title }}{{ end }}
 {{ end }}
 {{ define "main" }}
 {{/* 加载白名单控制：section 列表页（Kind 为 section）所属目录未登记在
@@ -20,7 +27,7 @@
 <section class="page-head">
   {{/* term 页（标签页）标题用显示映射查表，避免 Hugo 自动 title-case 成 Notes；同时修复 SEO <title> 显示英文 */}}
   {{ $heading := .Title }}
-  {{ if eq .Kind "term" }}{{ with index hugo.Data.tag_display .Data.Term }}{{ $heading = . }}{{ end }}{{ end }}
+  {{ if eq .Kind "term" }}{{ $heading = index hugo.Data.tag_display .Data.Term | default .Data.Term }}{{ end }}
   <h1>{{ $heading }}</h1>
   {{ with .Content }}<div class="page-content">{{ . }}</div>{{ end }}
 </section>
