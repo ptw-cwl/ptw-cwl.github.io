@@ -145,9 +145,31 @@ a:hover { text-decoration: underline; }
 .toc a:hover { color: var(--accent); text-decoration: underline; }
 
 /* ---------- 代码高亮（Hugo Chroma，noClasses 模式） ---------- */
-.post-content .highlight { background: var(--code-bg); border: 1px solid var(--border); border-radius: 6px; padding: 14px; overflow-x: auto; }
+.post-content .highlight { position: relative; background: var(--code-bg); border: 1px solid var(--border); border-radius: 6px; padding: 14px; overflow-x: auto; }
 .post-content .highlight pre { background: none; border: none; padding: 0; margin: 0; }
 .post-content .highlight code { background: none; padding: 0; }
+/* 代码块复制按钮 */
+.copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 3px 10px;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: var(--muted);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+.post-content .highlight:hover .copy-btn { opacity: 1; }
+.copy-btn:hover { color: var(--accent); border-color: var(--accent); }
+.copy-btn.copied { color: #22863a; border-color: #22863a; }
+@media (prefers-color-scheme: dark) {
+  .copy-btn.copied { color: #7ee787; border-color: #7ee787; }
+}
 /* Chroma token 配色（亮色） */
 .chroma { color: #24292e; }
 .chroma .err { color: #a61717; background-color: #e3d2d2; }
