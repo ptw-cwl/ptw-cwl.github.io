@@ -52,7 +52,7 @@ foreach ($sec in $sections) {
     if (-not (Test-Path $dir)) { Write-Host "WARN: 未找到目录: $dir" -ForegroundColor Yellow; continue }
     foreach ($file in (Get-ChildItem -Path $dir -Filter *.md)) {
         $tags = Get-FrontMatterTags -Path $file.FullName; $missing = @()
-        foreach ($t in $tags) { if (-not $registered.ContainsKey($t)) { $missing += $t; if (-not $unregistered.Contains($t)) { $unregistered += $t } } }
+        foreach ($t in $tags) { $tLower = $t.ToLower(); if (-not $registered.ContainsKey($tLower)) { $missing += $t; if (-not $unregistered.Contains($t)) { $unregistered += $t } } }
         if ($missing.Count -gt 0) { $badFiles[$file.Name] = $missing }
     }
 }
