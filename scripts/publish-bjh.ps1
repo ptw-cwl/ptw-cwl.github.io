@@ -1,11 +1,13 @@
 # publish-bjh.ps1 - Baijiahao publish step (publish ONLY, no conversion)
 # Flow: scan syndicate=true posts -> per platform entry where publish=true AND converted=true AND status!=published
-#       -> read converted draft from scripts/.bjh_drafts/<safeTitle>.md -> publish -> write back pid/status/publishedAt
+#       -> read converted draft from syndicate/baijiahao/<safeTitle>.md -> publish -> write back pid/status/publishedAt
 #
 # Conversion and publishing are two independent steps (split design):
-#   - convert-bjh.ps1 : prepares the platform-ready draft (converted=true, status=converted) into scripts/.bjh_drafts/. Run it first.
+#   - Conversion is done by the AI assistant in conversation (not a script): it reads the post,
+#     rewrites it to the platform style, writes the draft into syndicate/baijiahao/<safeTitle>.md, and sets
+#     converted=true / status=converted in the post front matter. Run it first.
 #   - publish-bjh.ps1 : this script. Only really publishes when platform entry publish=true AND converted=true,
-#                       and reads the draft produced by convert-bjh.ps1 (no re-conversion here).
+#                       and reads the draft produced by the AI conversion step (no re-conversion here).
 #
 # Credentials: read from env vars ONLY. Never write secrets into this file or any committed file (see rule 08: sensitive-info protection).
 #   $env:BJH_COOKIE  Baijiahao login Cookie
@@ -25,7 +27,7 @@ param(
 $ErrorActionPreference = "Stop"
 $root = Resolve-Path (Join-Path $PSScriptRoot "..")
 $platform = "baijiahao"
-$draftOutDir = Join-Path $root "scripts\.bjh_drafts"   # converted drafts, git-ignored
+$draftOutDir = Join-Path $root "syndicate\baijiahao"   # converted drafts, committed to git (not scanned by Hugo)
 if (-not (Test-Path $draftOutDir)) { New-Item -ItemType Directory -Path $draftOutDir | Out-Null }
 
 # ---------- front matter read/write ----------
@@ -168,18 +170,18 @@ foreach ($sec in $sections) {
         # conversion is a separate step; this script only publishes already-converted drafts
         $converted = Get-PlatformField -lines $r.lines -Platform $platform -Field 'converted'
         if ($converted -ne 'true') {
-            Write-Host ("SKIP (not converted, run convert-bjh.ps1 first): " + $file.Name) -ForegroundColor Yellow
+            Write-Host ("SKIP (not converted, run AI conversion step first): " + $file.Name) -ForegroundColor Yellow
             continue
         }
 
         $title = ""
         for ($i = $r.start + 1; $i -lt $r.end; $i++) { if ($r.lines[$i] -match '^\s*title\s*:\s*"(.*)"') { $title = $Matches[1]; break } }
 
-        # read the converted draft produced by convert-bjh.ps1 (conversion is a separate step)
+        # read the converted draft produced by the AI conversion step (conversion is a separate step)
         $safeTitle = ($title -replace '[\\/:*?"<>|]', '_')
         $draftPath = Join-Path $draftOutDir ($safeTitle + ".md")
         if (-not (Test-Path $draftPath)) {
-            Write-Host ("SKIP (converted draft missing, run convert-bjh.ps1 first): " + $file.Name) -ForegroundColor Yellow
+            Write-Host ("SKIP (converted draft missing, run AI conversion step first): " + $file.Name) -ForegroundColor Yellow
             continue
         }
         $body = Get-Content -Path $draftPath -Encoding UTF8 -Raw

@@ -32,8 +32,9 @@ Thumbs.db
 # 本地凭证文件：存放账号密码/API Key/Cookie/Token 等，由发布脚本从环境变量或本文件读取
 scripts/.secrets.local.ps1
 
-# 发布脚本生成的改写草稿（百家号等平台版正文，不进仓库）
-scripts/.bjh_drafts/
+# 平台分发转换文章（syndicate/<平台>/）默认纳入 git 提交（见 04-文章写作.md）
+# 若将来某平台草稿需本地化不外传，在此单独忽略，例如：
+# syndicate/wechat/
 
 # 任何显式标注 secret 的本地文件
 *.secret.ps1
