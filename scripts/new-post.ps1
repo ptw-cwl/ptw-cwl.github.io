@@ -10,7 +10,7 @@
 #   -Title      Article title (required, may be Chinese)
 #   -Type       Fixed: post (default, -> content/posts/) or about (-> content/about/ single page)
 #   -Published  If passed, draft=false; default draft=true
-#
+
 # Both AI and manual call can use this script directly.
 # NOTE: per 02-encoding rule, this script is all-ASCII (no Chinese in code/comments/output)
 #       to stay safe under PowerShell 5.1 (GBK) default decoding. Title text may still be Chinese.
@@ -19,8 +19,7 @@
 param(
     [Parameter(Mandatory = $true)][string]$Title,
     [string]$Type = "post",
-    [switch]$Published,
-    [switch]$Syndicate
+    [switch]$Published
 )
 
 # type -> content subdir map (register new content dirs here)
@@ -63,21 +62,6 @@ $localTime = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
 $escapedTitle = $Title.Replace('"', '\"')
 $draft = if ($Published) { "false" } else { "true" }
 
-# syndicate skeleton: default publish=false per platform (never auto-publish)
-$syndicateBlock = if ($Syndicate) {
-@"
-syndicate: true
-platforms:
-  - name: baijiahao
-    publish: false
-    converted: false
-    pid: ""
-    status: draft
-    publishedAt: ""
-    url: ""
-"@
-} else { "" }
-
 $content = @"
 ---
 title: "$escapedTitle"
@@ -87,7 +71,6 @@ updateTime: $localTime
 tags: []
 description: ""
 draft: $draft
-$syndicateBlock
 ---
 
 "@
