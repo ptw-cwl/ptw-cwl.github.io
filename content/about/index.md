@@ -1,6 +1,6 @@
 ---
 title: "关于我"
-id: about_erzqr_1786702931
+id: erzqr_1786702931
 createTime: 2026-08-14 18:22:11
 updateTime: 2026-08-15 11:52:23
 draft: false

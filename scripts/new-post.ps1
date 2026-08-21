@@ -1,6 +1,6 @@
 ﻿# =============================================
 # new-post.ps1 - create a new post file
-# Generate file named {type}_{rand5}_{unix_ts} and write front matter with id (same as filename).
+# Generate file named {rand5}_{unix_ts} and write front matter with id (same as filename).
 #
 # Usage (run from repo root):
 #   powershell -ExecutionPolicy Bypass -File scripts\new-post.ps1 -Title "Article Title"
@@ -40,8 +40,8 @@ $rand5 = -join (1..5 | ForEach-Object { $chars[(Get-Random -Maximum 36)] })
 # creation time as unix timestamp (seconds)
 $ts = [DateTimeOffset]::Now.ToUnixTimeSeconds()
 
-# id = type_rand5_ts, keep identical to filename
-$id = "$Type`_$rand5`_$ts"
+# id = rand5_ts, keep identical to filename (no type prefix)
+$id = "$rand5`_$ts"
 
 $section = $sectionMap[$Type]
 $dir = Join-Path $PSScriptRoot "..\content\$section"
@@ -52,6 +52,7 @@ if (-not (Test-Path $dir)) {
 # about is a single page: fixed index.md; if exists, only hint to fill id, do not overwrite
 if ($Type -eq "about" -and (Test-Path (Join-Path $dir "index.md"))) {
     Write-Host "HINT: about page exists (content\about\index.md); manually add id: $id to its front matter" -ForegroundColor Yellow
+    Write-Host "NOTE: id no longer uses a type prefix; it is '{rand5}_{ts}' (e.g. k7m2x_1764422400)" -ForegroundColor Yellow
     exit 0
 }
 
